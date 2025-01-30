@@ -11,19 +11,23 @@ namespace RoomBooking.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/v1/users")]
+[Route("api/v1/[controller]")]
 public class UserController : Controller
 {
     private readonly IUserRepository _userRepository;
+    private readonly ILogger<UserController> _logger;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserRepository userRepository, ILogger<UserController> logger)
     {
         _userRepository = userRepository;
+        _logger = logger;
     }
 
     [HttpGet]
     public async Task<IEnumerable<UserViewModel>> GetUsers()
     {
+        _logger.LogInformation("Obter todos os usuários.");
+
         var users = await _userRepository.GetUsersAsync();
         var viewModel = users.Select(u => new UserViewModel
         {
@@ -43,6 +47,7 @@ public class UserController : Controller
 
         if (user == null)
         {
+            _logger.LogWarning($"Usuário com ID {id} não encontrado.");
             return NotFound();
         }
 
@@ -62,7 +67,10 @@ public class UserController : Controller
     public async Task<IActionResult> StoreUser([FromBody] UserDto dto)
     {
         if (!ModelState.IsValid)
+        {
+            _logger.LogWarning("Erros de validação encontrados ao criar usuário.");
             return BadRequest(ModelState);
+        }
 
         var user = new User
         {
@@ -97,16 +105,18 @@ public class UserController : Controller
     public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] UserDto dto)
     {
         if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        var user = new User
         {
-            id = dto.id,
-            name = dto.name,
-            email = dto.email,
-            password = dto.password,
-            roles = dto.roles,
-        };
+            _logger.LogWarning("Erros de validação encontrados ao atualizar usuário.");
+            return BadRequest(ModelState);
+        }
+
+        var user = await _userRepository.GetUserByIdAsync(id);
+
+        if (user == null)
+        {
+            _logger.LogWarning($"Usuário com ID {id} não encontrado.");
+            return NotFound();
+        }
 
         var updatedUser = await _userRepository.UpdateUserAsync(id, user);
 
@@ -121,6 +131,14 @@ public class UserController : Controller
     [HttpPatch("{id}")]
     public async Task<IActionResult> UpdatePatchUser([FromRoute] int id, [FromBody] JsonPatchDocument userDocument)
     {
+        var user = await _userRepository.GetUserByIdAsync(id);
+
+        if (user == null)
+        {
+            _logger.LogWarning($"Usuário com ID {id} não encontrado.");
+            return NotFound();
+        }
+
         var updatedUser = await _userRepository.UpdateUserPatchAsync(id, userDocument);
 
         if (updatedUser == null)

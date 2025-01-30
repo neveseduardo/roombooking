@@ -1,8 +1,8 @@
 using RoomBooking.Database;
 using RoomBooking.Repository;
 using RoomBooking.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using RoomBooking.Repositories;
+using YourNamespace.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,25 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddTransient<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo()
-    {
-        Title = "WebApi",
-        Description = "WebApi - Web APIs exemplo",
-        Version = "v1"
-    });
-});
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddCustomSwagger();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseCustomSwagger();
 }
 
 app.UseAuthentication();
