@@ -1,5 +1,5 @@
 <template>
-	<div class="">
+	<div class="bg-brand-950">
 		<div>HEADER</div>
 		<div>
 			<RouterView />
