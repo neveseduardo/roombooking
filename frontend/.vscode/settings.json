@@ -1,0 +1,37 @@
+{
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.fixAll.tslint": "explicit",
+		"source.fixAll.stylelint": "explicit"
+	},
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"vue"
+	],
+	"html.format.enable": false,
+	"emmet.triggerExpansionOnTab": true,
+	"emmet.includeLanguages": {
+		"vue-html": "html"
+	},
+	"files.associations": {
+		".babelrc": "jsonc",
+		".eslintrc": "jsonc",
+		".markdownlintrc": "jsonc",
+		"*.config.js": "javascript",
+		"*.spec.js": "javascript",
+		"*.vue": "vue",
+	},
+	"css.lint.unknownAtRules": "ignore",
+	"scss.lint.unknownAtRules": "ignore",
+	"less.lint.unknownAtRules": "ignore",
+	"files.eol": "\n",
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+	"files.trimTrailingWhitespace": true,
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4
+}

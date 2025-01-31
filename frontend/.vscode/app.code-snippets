@@ -1,0 +1,64 @@
+{
+	"vue component": {
+		"prefix": [
+			"vue"
+		],
+		"body": [
+			"<template>",
+			"\t<div class=\"$1\">",
+			"\t\t${TM_FILENAME_BASE}",
+			"\t</div>",
+			"</template>",
+			"",
+			"<script setup>",
+			"</script>",
+		],
+		"description": "Adiciona template completo vue"
+	},
+	"slot": {
+		"prefix": [
+			"slot",
+			"slo"
+		],
+		"body": [
+			"<slot name=\"$1\" />",
+		],
+		"description": "Adiciona um slot vue"
+	},
+	"template": {
+		"prefix": [
+			"template",
+			"templ"
+		],
+		"body": [
+			"<template>",
+			"\t$1",
+			"</template>",
+		],
+		"description": "Adiciona template vue"
+	},
+	"setup": {
+		"prefix": [
+			"setup"
+		],
+		"body": [
+			"<script setup>",
+			"\t$1",
+			"</script>",
+		],
+		"description": "Adiciona script setup"
+	},
+	"consoleLog": {
+		"prefix": "clg",
+		"body": [
+			"// eslint-disable-next-line no-console",
+			"console.log('$1');",
+		],
+		"description": "Displays a message in the console"
+	},
+	"consoleError": {
+		"prefix": "cer",
+		"body": "console.error(${1:error});",
+		"description": "Displays a message in the console and also includes a stack trace from where the method was called"
+	},
+}
