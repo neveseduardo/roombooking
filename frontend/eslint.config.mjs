@@ -85,6 +85,7 @@ export default [
 				named: "never",
 				asyncArrow: "always",
 			}],
+			"@typescript-eslint/no-explicit-any": "off",
 
 			"space-in-parens": ["error", "never"],
 			"space-infix-ops": ["error"],
